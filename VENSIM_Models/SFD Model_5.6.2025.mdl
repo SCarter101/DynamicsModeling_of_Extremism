@@ -1,0 +1,468 @@
+{UTF-8}
+Total Population=
+	TSIs + Movement Actors + Extremist Actors + Violent Actors
+	~	Persons/Month
+	~		|
+
+Scaling Factor=
+	IF THEN ELSE(
+	    Total Population > TOTAL POPULATION CAP,
+	    TOTAL POPULATION CAP / Total Population,
+	    1
+	  )
+	~	Persons/Month
+	~		|
+
+TOTAL POPULATION CAP=
+	10000
+	~	Persons
+	~		|
+
+Violent Actors= INTEG (
+	Radicalization-Death and Incarceration,
+		5)
+	~	Persons
+	~		|
+
+Demobilization Rate=
+	0.94872
+	~	1/Month
+	~		|
+
+Disenfranchisement=
+	Extremist Actors * Disenfranchisement Rate
+	~	Persons/Month
+	~		|
+
+Disenfranchisement Rate=
+	0.9
+	~	1/Month
+	~		|
+
+Disengagement=
+	TSIs * Disengagement Rate
+	~	Persons/Month
+	~		|
+
+Death and Incarceration=
+	Violent Actors * Death and Incarceration Rate
+	~	Persons/Month
+	~		|
+
+Death and Incarceration Rate=
+	1
+	~	1/Month
+	~		|
+
+Movement Actors= INTEG (
+	Mobilization-Demobilization-Escalation,
+		975)
+	~	Persons
+	~		|
+
+Demobilization=
+	Movement Actors * Demobilization Rate
+	~	Persons/Month
+	~		|
+
+TSIs= INTEG (
+	Engagement-Disengagement-Mobilization,
+		8970)
+	~	Persons
+	~		|
+
+Engagement=
+	Extremist Actors * Online Recruitment Rate * Scaling Factor
+	~	Persons/Month
+	~		|
+
+Disengagement Rate=
+	0.891305
+	~	1/Month
+	~		|
+
+Online Recruitment Rate=
+	179.4
+	~	1/Month
+	~		|
+
+Extremist Actors= INTEG (
+	(Escalation + Nontraditional Susceptible Individual) - Disenfranchisement - Radicalization\
+		,
+		50)
+	~	Persons
+	~		|
+
+Active Surveillance=
+	1
+	~	1/Month
+	~		|
+
+Real World Event=
+	1
+	~	Persons/Month
+	~		|
+
+DeEscalation Efforts= GAME (
+	0.01 * Active Surveillance)
+	~	1/Month
+	~		|
+
+Law enforcement=
+	0.16128 * Active Surveillance
+	~	1/Month
+	~		|
+
+Radicalization=
+	Extremist Actors * (Law enforcement - Controlled Isolation) * Scaling Factor
+	~	Persons/Month
+	~		|
+
+Media Narrative Spin=
+	1
+	~	Month
+	~		|
+
+Controlled Isolation=
+	(Controlled Narrative + Ingroup Affirmation + Multimedia Branding + Outgroup Disenfranchisement\
+		) + Perception of Crisis
+	~	1/Month
+	~		|
+
+Perception of Crisis= GAME (
+	(Real World Event * Media Narrative Spin) * 0.01)
+	~	1/Month
+	~		|
+
+Personal Isolation=
+	(Absence of Role Model Mentor + Access to Social Resources + Adversarial Environment\
+		 + Household Instability + Mental Cognitive Diversity
+	) + Perception of Crisis
+	~	1/Month
+	~		|
+
+Escalation=
+	Movement Actors * (Controlled Isolation - DeEscalation Efforts) * Scaling Factor
+	~	Persons/Month
+	~		|
+
+Mobilization=
+	TSIs * (Personal Isolation - DeEscalation Efforts) * Scaling Factor
+	~	Persons/Month
+	~		|
+
+Absence of Role Model Mentor=
+	0.036958
+	~	1/Month
+	~		|
+
+Access to Social Resources=
+	0.014131
+	~	1/Month
+	~		|
+
+Adversarial Environment=
+	0.028262
+	~	1/Month
+	~		|
+
+Controlled Narrative=
+	0.010256
+	~	1/Month
+	~		|
+
+Household Instability=
+	0.020653
+	~	1/Month
+	~		|
+
+Ingroup Affirmation=
+	0.020512
+	~	1/Month
+	~		|
+
+Mental Cognitive Diversity=
+	0.008696
+	~	1/Month
+	~		|
+
+Multimedia Branding=
+	0.005128
+	~	1/Month
+	~		|
+
+Nontraditional Susceptible Individual=
+	0
+	~	Persons/Month
+	~		|
+
+Outgroup Disenfranchisement=
+	0.015384
+	~	1/Month
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 60
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Homepage
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,110,0
+12,1,0,667,5,207,42,8,7,0,58,-1,0,0,0,-1--1--1,-1--1--1,Arial|16|B|0-0-0,0,0,0,0,0,0
+Systems Dynamics Modeling of Social Isolation in Extremist Movements
+12,2,0,681,127,392,67,8,7,0,58,-1,0,0,0,-1--1--1,-1--1--1,Arial|12|I|0-0-0,0,0,256,0,0,0
+Abstract — This cross-disciplinary approach to mapping and modeling factors related to radicalization and extremism presents a nuanced opportunity for facilitating insights into intervention points. By focusing on social isolation, an extraordinarily complex area of research, the model maintains flexibility to adapt to other variables, other extremist movements, and non-extremist activities where humans aggregate around an ideology that leads to physical action. This research explores the transnational white supremacist movement, particularly the Rise Above Movement (RAM), strongly associated with ‘active clubs’ and the global ‘Mixed Martial Arts (MMA) culture. It interrogates the role of social isolation in extremism through the lens of computational social sciences and conflict analysis, revealing that the complex dynamics of influences on extremist behaviors do not follow a ‘conveyer-belt’ production model but instead adhere to various outputs on a complex system. The model also highlights how individual cognition is informed by social dynamics and shaped by a wide range of individual factors, which are necessary considerations in intervention and prevention. 
+12,3,0,375,291,82,54,3,7,0,62,-1,0,2,0,0-0-0,0-0-255,Arial|12|B|255-255-255,0,0,0,0,0,0
+Model Structure
+12,4,0,589,291,81,53,3,7,0,62,-1,0,3,0,0-0-0,0-128-0,Arial|12|B|255-255-255,0,0,0,0,0,0
+Simulation
+12,5,0,790,292,81,53,3,7,0,62,-1,0,4,0,0-0-0,255-128-64,Arial|12|B|255-255-255,0,0,0,0,0,0
+De-Escalation Testing
+12,6,0,984,292,81,53,3,7,0,62,-1,0,5,0,0-0-0,0-0-0,Arial|12|B|255-255-255,0,0,0,0,0,0
+Sensitivity Analysis
+12,7,0,689,392,182,28,3,7,0,62,-1,0,6,0,0-0-0,255-0-0,Arial|10|B|255-255-255,0,0,0,0,0,0
+Non-Traditional Susceptible Individuals (Lone Wolves)
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Master
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,38,0
+11,1,0,1888,808,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,2,Radicalization,1888,839,83,23,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,3,Violent Actors,2060,808,78,58,3,3,0,24,-1,0,0,0,0-0-0,0-0-0,|22|B|0-0-0,0,1,0,0,0,0
+10,4,Movement Actors,1306,802,75,58,3,3,0,28,-1,0,0,0,0-0-0,255-255-255,|22|B|0-0-0,0,0,0,0,0,0
+10,5,Extremist Actors,1715,805,75,60,3,3,0,28,-1,0,0,0,0-0-0,255-255-255,|22|B|0-0-0,0,0,0,0,0,0
+1,6,8,4,68,0,0,22,1,192,0,0-0-0,|||0-0-0,1|(1452,807)|
+1,7,8,5,4,0,0,22,1,192,0,0-0-0,|||0-0-0,1|(1587,807)|
+11,8,0,1529,807,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,9,Escalation,1529,838,66,23,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,10,4,9,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1428,917)|
+10,11,Controlled Isolation,1738,395,83,31,8,3,0,24,-1,0,0,0,0-0-0,0-0-0,|20|B|0-0-0,0,0,0,0,0,0
+10,12,DeEscalation Efforts,1357,1018,86,30,8,3,0,24,-1,0,0,0,0-0-0,0-0-0,|20|B|0-0-0,0,0,0,0,0,0
+10,13,Nontraditional Susceptible Individual,1645,983,103,29,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,14,11,9,1,0,0,13,1,192,0,0-0-0,|||0-0-0,1|(1500,597)|
+10,15,Personal Isolation,833,993,111,22,8,3,0,58,-1,0,0,0,0-0-0,0-0-0,Dubai Medium|20|B|0-0-0,0,0,0,0,0,0
+10,16,Mental Cognitive Diversity,511,972,61,18,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,17,Household Instability,581,1093,74,16,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,18,Access to Social Resources,764,1155,62,18,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,19,Absence of Role Model Mentor,992,1127,75,19,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,20,Adversarial Environment,1048,1065,87,31,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,21,16,15,1,2,0,0,0,192,0,-1--1--1,,1|(692,936)|
+1,22,17,15,1,2,0,0,0,192,0,-1--1--1,,1|(681,1017)|
+1,23,18,15,1,2,0,0,0,192,0,-1--1--1,,1|(778,1074)|
+1,24,19,15,1,2,0,0,0,192,0,-1--1--1,,1|(868,1097)|
+1,25,20,15,1,2,0,0,0,192,0,-1--1--1,,1|(925,1064)|
+10,26,Outgroup Disenfranchisement,1520,361,112,17,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,27,Controlled Narrative,1638,259,85,19,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,28,Ingroup Affirmation,1860,263,77,13,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,29,Multimedia Branding,1969,372,76,15,8,3,2,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,30,26,11,1,2,0,0,0,192,0,-1--1--1,,1|(1619,412)|
+1,31,27,11,1,2,0,0,0,192,0,-1--1--1,,1|(1647,333)|
+1,32,28,11,1,2,0,0,0,192,0,-1--1--1,,1|(1817,372)|
+1,33,29,11,1,2,0,0,0,192,0,-1--1--1,,1|(1883,398)|
+1,34,12,9,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1525,963)|
+10,35,TSIs,981,804,74,74,2,3,0,28,-1,0,0,0,0-0-0,255-255-255,|48|B|0-0-0,0,1,0,0,0,0
+1,36,38,35,68,0,0,22,0,192,0,-1--1--1,,1|(1147,804)|
+1,37,38,4,4,0,0,22,0,192,0,-1--1--1,,1|(1192,805)|
+11,38,0,1147,805,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,39,Mobilization,1147,831,72,18,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,40,15,39,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1050,958)|
+1,41,12,39,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1197,991)|
+1,42,1,5,68,0,0,22,0,192,0,-1--1--1,,1|(1836,808)|
+1,43,1,3,4,0,0,22,0,192,0,-1--1--1,,1|(1938,808)|
+1,44,5,2,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1818,924)|
+1,45,11,2,1,0,0,13,1,192,0,0-0-0,|||0-0-0,1|(1996,601)|
+1,46,35,39,1,0,0,0,1,64,0,0-0-0,|||0-0-0,1|(1063,875)|
+1,47,13,5,1,0,0,0,1,193,0,0-0-0,|||0-0-0,1|(1725,924)|
+10,48,Perception of Crisis,936,455,78,30,8,3,0,24,-1,0,0,0,-1--1--1,-1--1--1,|20|B|0-0-0,0,0,0,0,0,0
+10,49,Real World Event,1059,287,66,46,8,3,0,24,-1,0,0,0,0-0-0,0-0-0,|22|B|0-0-0,0,0,0,0,0,0
+1,50,49,48,1,0,0,0,1,193,0,0-0-0,|||0-0-0,1|(955,352)|
+10,51,Media Narrative Spin,813,328,59,28,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,52,51,48,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(884,379)|
+1,53,48,15,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(550,746)|
+1,54,48,11,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1339,319)|
+10,55,Law enforcement,2076,953,93,37,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,56,55,2,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1967,935)|
+10,57,Active Surveillance,1808,1069,91,37,8,3,0,24,-1,0,0,0,0-0-0,0-0-0,|22|B|0-0-0,0,0,0,0,0,0
+1,58,57,12,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1610,1102)|
+1,59,57,55,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1957,1047)|
+12,60,48,687,803,63,35,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,61,63,35,68,0,0,22,0,192,0,-1--1--1,,1|(827,804)|
+1,62,63,60,4,0,0,22,0,192,0,-1--1--1,,1|(785,803)|
+11,63,0,827,803,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,64,Engagement,827,832,73,21,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+12,65,48,2043,565,30,17,8,3,1,0,-1,0,0,0,0,0,0,0,0,0
+1,66,68,3,100,1,0,22,0,192,0,-1--1--1,,1|(2043,717)|
+1,67,68,65,4,1,0,22,0,192,0,-1--1--1,,1|(2043,627)|
+11,68,0,2043,679,8,6,33,3,1,0,4,0,0,0,0,0,0,0,0,0
+10,69,Death and Incarceration,2137,679,86,30,40,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,70,Online Recruitment Rate,741,673,71,34,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,71,70,64,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(822,740)|
+1,72,5,64,1,0,0,0,1,192,0,0-0-0,|||0-0-0,1|(1206,682)|
+12,73,48,981,534,54,30,8,3,1,0,-1,0,0,0,0,0,0,0,0,0
+1,74,76,35,100,1,0,22,0,192,0,-1--1--1,,1|(981,637)|
+1,75,76,73,4,1,0,22,0,192,0,-1--1--1,,1|(981,597)|
+11,76,0,981,637,8,6,33,3,1,0,4,0,0,0,0,0,0,0,0,0
+10,77,Disengagement,1098,637,109,22,40,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,78,Disengagement Rate,1149,525,87,34,8,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,79,78,77,1,1,0,0,0,192,0,-1--1--1,,1|(1092,595)|
+1,80,35,77,1,1,0,0,0,192,0,-1--1--1,,1|(1087,722)|
+12,81,48,1306,540,41,23,8,3,1,0,-1,0,0,0,0,0,0,0,0,0
+1,82,84,4,100,1,0,22,0,192,0,-1--1--1,,1|(1306,694)|
+1,83,84,81,4,1,0,22,0,192,0,-1--1--1,,1|(1306,598)|
+11,84,0,1306,639,8,6,33,3,1,0,4,0,0,0,0,0,0,0,0,0
+10,85,Demobilization,1400,639,86,20,40,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,86,Demobilization Rate,1431,483,101,27,8,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,87,86,85,1,1,0,0,0,192,0,-1--1--1,,1|(1383,547)|
+1,88,4,85,1,1,0,0,0,192,0,-1--1--1,,1|(1389,713)|
+12,89,48,1718,554,37,21,8,3,1,0,-1,0,0,0,0,0,0,0,0,0
+1,90,92,5,100,1,0,22,0,192,0,-1--1--1,,1|(1718,704)|
+1,91,92,89,4,1,0,22,0,192,0,-1--1--1,,1|(1718,613)|
+11,92,0,1718,657,8,6,33,3,1,0,4,0,0,0,0,0,0,0,0,0
+10,93,Disenfranchisement,1841,657,115,28,40,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+10,94,Disenfranchisement Rate,1840,515,120,35,8,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,95,94,93,1,1,0,0,0,192,0,-1--1--1,,1|(1803,592)|
+1,96,5,93,1,1,0,0,0,192,0,-1--1--1,,1|(1828,732)|
+10,97,Death and Incarceration Rate,2215,558,84,37,8,3,1,8,-1,0,0,0,0-0-0,0-0-0,|22||0-0-0,0,0,0,0,0,0
+1,98,97,69,1,1,0,0,0,192,0,-1--1--1,,1|(2187,620)|
+1,99,3,69,1,1,0,0,0,192,0,-1--1--1,,1|(2145,734)|
+12,100,0,67,15,80,40,3,7,0,58,-1,0,1,0,0-0-0,0-0-0,Arial|12||0-0-0,0,0,0,0,0,0
+Return to Main Menu
+10,101,TOTAL POPULATION CAP,1206,1296,78,34,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0,0,0,0,0,0,0
+10,102,Total Population,1968,1295,76,37,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0,0,0,0,0,0,0
+10,103,Scaling Factor,1557,1300,56,32,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0,0,0,0,0,0,0
+1,104,5,102,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,105,4,102,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,106,35,102,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,107,3,102,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,108,102,103,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,109,101,103,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,110,103,64,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,111,103,39,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,112,103,9,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,113,103,2,0,3,0,0,0,64,0,-1--1--1,,1|(0,0)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Simulation
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,56,0
+12,1,0,785,309,80,40,3,7,0,58,-1,0,1,0,0-0-0,0-0-0,Arial|12||0-0-0,0,0,0,0,0,0
+Return to Main Menu
+12,2,0,1802,387,300,200,0,15,0,0,2,0,0,0,0,0,0,0,0,0
+Movement Actors,Graph
+12,3,0,1192,788,304,199,8,15,0,0,2,0,0,0,0,0,0,0,0,0
+Extremist Actors,Graph
+12,4,0,1801,789,300,200,0,15,0,0,2,0,0,0,0,0,0,0,0,0
+Violent Actors,Graph
+12,5,0,1211,411,155,96,8,79,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0,0,0,0,0,0,0
+Online Recruitment Rate,175,185,0.5
+12,6,0,286,105,40,20,8,0,0,0,-1,0,0,0,0,0,0,0,0,0
+30,7,Media Event.bmp,1497,1355,607,349,8,0,0,0,-1,0,0,0,0,0,0,0,0,0
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*De-Escalation
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,68,0
+12,1,0,548,134,80,40,3,7,0,58,-1,0,1,0,0-0-0,0-0-0,Arial|12||0-0-0,0,0,0,0,0,0
+Return to Main Menu
+12,2,0,1310,435,313,329,8,15,0,0,2,0,0,0,0,0,0,0,0,0
+Movement Actors,Causes Strip
+10,3,DeEscalation Efforts,818,410,134,45,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+12,4,0,819,346,80,40,8,7,0,0,-1,0,0,0,0,0,0,0,0,0
+De-Escalation Efforts
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Sensitivity
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,98,0
+12,1,0,158,184,80,40,3,7,0,58,-1,0,1,0,0-0-0,0-0-0,Arial|12||0-0-0,0,0,0,0,0,0
+Return to Main Menu
+12,2,0,740,168,149,52,8,7,0,58,-1,0,0,0,0-0-0,0-0-0,Arial|18|B|0-0-0,0,0,0,0,0,0
+Extremist Actors
+30,3,Extremist_Actors.bmp,762,421,505,223,8,0,0,0,-1,0,0,0,0,0,0,0,0,0
+30,4,Postage Stamp Graph.bmp,767,876,509,221,8,0,0,0,-1,0,0,0,0,0,0,0,0,0
+30,5,MonteCarlo_002.bmp,594,1349,337,237,8,0,0,0,-1,0,0,0,0,0,0,0,0,0
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Lone Wolves
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,81,0
+12,1,0,185,136,80,40,3,7,0,58,-1,0,1,0,0-0-0,0-0-0,Arial|12||0-0-0,0,0,0,0,0,0
+Return to Main Menu
+12,2,0,1274,406,300,200,0,15,0,0,2,0,0,0,0,0,0,0,0,0
+Violent Actors,Graph
+12,3,0,663,407,300,200,0,15,0,0,2,0,0,0,0,0,0,0,0,0
+Extremist Actors,Graph
+///---\\\
+:GRAPH Media_Spin
+:TITLE Critical Media Event
+:SCALE
+:VAR Perception of Crisis
+:DATASET 
+:SCALE
+:VAR Extremist Actors
+:DATASET 
+:L<%^E!@
+1:Violent Actors.vdfx
+1:Sensitivity_Concerned.vdfx
+1:Sensitivity_002.vdfx
+1:Sensitive_baserun.vdfx
+1:DeEscalating_0_5.vdfx
+1:Sensitivity_001.vdfx
+1:SensitivityAnalysis.vdfx
+1:Population.vdfx
+1:PopulationCap.vdfx
+4:Time
+5:Adversarial Environment
+9:PopulationCap
+19:38,1
+24:0
+25:60
+26:60
+100:Sensivity_MC_run002.voc
+101:Sensivity_MC_run001.vpd
+23:0
+18:Sensitivity_First_Run.vsc
+20:Sensivity.lst
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:0
+72:0
+73:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Dubai Medium|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
